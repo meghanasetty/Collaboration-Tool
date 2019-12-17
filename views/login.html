@@ -1,0 +1,58 @@
+<html lang="en">
+ <head>
+  <title>Login</title>
+  <link href="stylesheets/foundation.css" type="text/css" rel="stylesheet" />
+  <link href="stylesheets/normalize.css" type="text/css" rel="stylesheet" />
+   <link href="stylesheets/app.css" type="text/css" rel="stylesheet" />
+   <script src="javascripts/jquery.js">
+     </script>
+ 
+   
+ </head>
+ <body>
+   <div style="float:top">
+   <img class="inline" src="images/logo.jpg" alt="logo" height="100" width="100" />
+   <h1 id="h1" style="display:inline">Collaboration Tool</h1>
+   </div>
+   <div id="img1">
+	<p>Make your work more comfortable as in company</p>
+	<br>
+	<img  src="images/download.jpeg" alt="image" style="height:650apx;width:750px" />
+	</div>
+   <div align="right">
+     <form action="/loginuser" method="POST">
+      
+         <table class="textcenter" id="table_t1">
+             <fieldset>
+		<caption>Login</caption>
+           <tr>
+             
+             <td style="vertical-align:bottom;text-align:center" colspan="2">
+               <input type="text" size="15" placeholder="Enter your Email" name="email" required />
+             </td>
+           </tr>
+           <tr>
+          
+             <td colspan="2" style="vertical-align:top;text-align:center" >
+               <input type="password" size="15" placeholder="Enter your Password" name="pwd" required/>
+             </td>
+           </tr>
+           <tr>
+             <td colspan="2" style="text-align:center;vertical-align:top;position:relative;top:0px">
+               <input type="submit" value="Signin" class="large_button" />
+             </td>
+	   </tr>
+              <tr>
+		<td style="text-align:center">
+		<a href="#" >Forgot Password</a>
+             </td>
+		<td>
+			<a href="/register">New User?Create Account</a>
+		</td>
+           </tr>
+                 </fieldset>
+         </table>
+     </form>
+   </div>
+ </body>
+</html>

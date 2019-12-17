@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link href="/stylesheets/foundation.css" type="text/css" rel="stylesheet" />
+    <link href="/stylesheets/normalize.css" type="text/css" rel="stylesheet" />
+    <link href="/stylesheets/app.css" type="text/css" rel="stylesheet" />
+
+</head>
+<body>
+    <div style="float:top">
+    <img class="inline" src="/images/logo.jpg" alt="logo" height="100" width="100" />
+    <h1 id="h1" style="display:inline">Collaboration Tool</h1>
+    <p id="username" style="display:inline"><b>Welcome, {{username}}</b></p>
+    </div>
+    <div id="list_projects" class=" large-2 columns" >
+    </div>
+    <div id="project_posts" class=" large-8 columns">
+    </div>
+    <div id="chat people" class=" large-2 columns">
+        <a href="/logout">Logout</a>
+    </div>
+<br>
+
+
+    <script src="/javascripts/jquery.js">
+    </script>
+    <script >
+        $(document).ready(function(){
+            var project_names= "{{project_names}}".split(",");
+            var designation="{{name.designation}}";
+            if(designation=="Project Manager")
+                $("#list_projects").append("<a href=\"/projectpage\">Create Project</a><br />");
+            $("#list_projects").append("Projects:<br/>");
+            for(var i=0;i<project_names.length;i++) {
+            //console.log(project_names[i]);
+                $("#list_projects").append('<a href=\"/projectpage/'+project_names[i]+'\">'+project_names[i]+'</a><br />');
+
+            }
+            var posts="[{{posts}}]";
+            posts=posts.replace(/&quot;/g,"\"");
+            posts=posts.replace(/\\n/g, "\\n")
+                    .replace(/\\'/g, "\\'")
+                    .replace(/\\"/g, '\\"')
+                    .replace(/\\&/g, "\\&")
+                    .replace(/\\r/g, "\\r")
+                    .replace(/\\t/g, "\\t")
+                    .replace(/\\b/g, "\\b")
+                    .replace(/\\f/g, "\\f");
+            posts = posts.replace(/[\u0000-\u0019]+/g,"");
+            console.log(posts);
+            posts=JSON.parse(posts);
+            var j=0;
+            for(j=0;j<posts.length;j++) {
+                var d=new Date(posts[j].date);
+                var datestr=""+d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear()+" "+ d.getHours()+":"+ d.getMinutes()+":"+ d.getSeconds();
+                $("#project_posts").append("<p><b>" +posts[j].project+" -> "+ posts[j].postedby + ":</b></p>");
+                $("#project_posts").append("<p><small>"+datestr+"</small></p>");
+                $("#project_posts").append("<p>"+posts[j].message+"</p><br /><hr><br />");
+            }
+            console.log(j);
+            if(j==0)
+                $("#project_posts").append("No posts to display");
+        });
+        </script>
+</body>
+</html>

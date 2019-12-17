@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Project</title>
+    <link href="stylesheets/foundation.css" type="text/css" rel="stylesheet" />
+    <link href="stylesheets/normalize.css" type="text/css" rel="stylesheet" />
+    <link href="stylesheets/app.css" type="text/css" rel="stylesheet" />
+
+</head>
+<body>
+    <div style="float:top">
+        <img class="inline" src="images/logo.jpg" alt="logo" height="100" width="100" />
+        <h1 id="h1" style="display:inline">Collaboration Tool</h1>
+        <p id="username" style="display:inline"><b>Welcome, {{username}}</b></p>
+    </div>
+    <div>
+    <form id="creation" action="/projectpage/create" method="post">
+        <label><input type="hidden" id="teammems" name="teammems"/></label>
+        <div class="row">
+            <div class="large-4 columns">
+                <label>Name of Project:*
+                    <input type="text" placeholder="ProjectName" name="name" id="name" required/>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-4 columns">
+                <label>Description:*
+                    <textarea rows="7" cols="20" id="des" name="des" required>
+                    </textarea>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-4 columns">
+                <label id="teammembers">Team Members:*
+                    <br />
+                    <input type="button" value="ADD+" name="add" id="add" />
+                    <input type="email" placeholder="Enter mail" name="team1" id="team1" required/>
+
+                </label>
+            </div>
+        </div>
+        <div class="row" align='center' >
+            <div class="large-4 columns">
+                <input type="submit" name="submit" class="button small round" id="submit" />
+                <input type="reset" name="reset" class="button small round" />
+            </div>
+        </div>
+    </form>
+    </div>
+    <script src="javascripts/jquery.js">
+    </script>
+    <script>
+        $(document).ready(function()
+        {
+            var teammem=2;
+            $("#add").click(function()
+        {
+            $("#teammembers").append("<input type=\"email\" placeholder=\"Enter mail\" name=\"team"+teammem+"\" id=\"team"+teammem+"\" required/>");
+            teammem++;
+        });
+            $("#creation").submit(function(){
+                var team=[];
+                console.log("ca,e "+teammem);
+                for(var i=1;i<teammem;i++) {
+                    var s="#team"+i;
+                    var v=$(s).val();
+                    team.push(v);
+                    console.log(team);
+                }
+                $("#teammems").val(team.toString());
+            });
+        });
+    </script>
+</body>
+</html>

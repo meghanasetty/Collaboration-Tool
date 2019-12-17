@@ -1,0 +1,25 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "env": {
+    "PYTHON": "C:/Python27/python.exe"
+  },
+  "dependencies": {
+    "async": "*",
+    "bcrypt": "*",
+    "body-parser": "*",
+    "consolidate": "*",
+    "express": "*",
+    "express-session": "^1.11.3",
+    "fs": "*",
+    "mongodb": "*",
+    "nodemailer": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "swig": "*",
+    "fs":"*"
+  }
+}

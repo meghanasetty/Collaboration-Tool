@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Page</title>
+    <link href="/stylesheets/foundation.css" type="text/css" rel="stylesheet" />
+    <link href="/stylesheets/normalize.css" type="text/css" rel="stylesheet" />
+    <link href="/stylesheets/app.css" type="text/css" rel="stylesheet" />
+
+</head>
+<body>
+<div style="float:top">
+    <img class="inline" src="/images/logo.jpg" alt="logo" height="100" width="100" />
+    <h1 id="h1" style="display:inline">Collaboration Tool</h1>
+    <p id="username" style="display:inline"><b>Welcome, {{pagedetail.username}}</b></p>
+</div>
+<h3 align="center">{{projectname}}</h3>
+<div id="list_projects" class=" large-2 columns" >
+<a href="/homepage">Home</a><br />
+</div>
+<div id="project_posts" class=" large-8 columns">
+<form action="/projectpage/addpost" method="POST">
+    <label>
+    <textarea rows="10" cols="30" name="postcontent" id="postcontent" placeholder="post">
+    </textarea>
+    </label>
+    <input type="submit" value="Post" name="Post" class="button small round" id="Post" disabled/>
+    </form>
+
+</div>
+<div id="team_members" class="large-2 columns">
+    <a href="/logout">Logout</a>
+    <p>Team:</p>
+</div>
+<br>
+
+
+<script src="/javascripts/jquery.js">
+</script>
+<script >
+    $(document).ready(function(){
+        $("#postcontent").keyup(function(){
+            var postcontent=document.getElementById("postcontent").value;
+            console.log(postcontent+" is the content");
+            if(postcontent.trim()!=="")
+                document.getElementById("Post").removeAttribute("disabled");
+            else
+                document.getElementById("Post").setAttribute("disabled","disabled");
+        });
+        console.log("quotes:::::"+"{{pagedetail.project_names}}"+"{{team}}");
+        var project_names= "{{pagedetail.project_names}}".split(",");
+        var designation="{{pagedetail.name.designation}}";
+        console.log(project_names);
+        console.log(designation+"projectname "+project_names+"length: "+project_names.length);
+        var team="{{team}}".replace(/&quot;/g,"").split(",");
+        if(designation=="Project Manager")
+            $("#list_projects").append("<a href=\"/projectpage\">Create Project</a><br />");
+        $("#list_projects").append("Projects:<br/>");
+        for(var i=0;i<project_names.length;i++) {
+            console.log(project_names[i]);
+            $("#list_projects").append('<a href=\"/projectpage/' + project_names[i] + '\">' + project_names[i] + '</a><br />');
+        }
+        for(var i=0;i<team.length;i++){
+            console.log("team:"+team[i]);
+            $("#team_members").append("<input type=\'button\' value=\'"+team[i]+"\' onclick=\'showpop(this)\'/><br />");
+        }
+
+        var posts="[{{posts}}]";
+        console.log("waht "+posts);
+        posts=posts.replace(/&quot;/g,"\"");
+        posts=posts.replace(/\\n/g, "\\n")
+                .replace(/\\'/g, "\\'")
+                .replace(/\\"/g, '\\"')
+                .replace(/\\&/g, "\\&")
+                .replace(/\\r/g, "\\r")
+                .replace(/\\t/g, "\\t")
+                .replace(/\\b/g, "\\b")
+                .replace(/\\f/g, "\\f");
+        posts = posts.replace(/[\u0000-\u0019]+/g,"");
+        console.log(posts);
+        posts=JSON.parse(posts);
+        var j=0;
+        for(j=0;j<posts.length;j++) {
+            var d=new Date(posts[j].date);
+            var datestr=""+d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear()+" "+ d.getHours()+":"+ d.getMinutes()+":"+ d.getSeconds();
+            $("#project_posts").append("<p><b>" + posts[j].postedby + ":</b></p>");
+            $("#project_posts").append("<p><small>"+datestr+"</small></p>");
+            $("#project_posts").append("<p>"+posts[j].message+"</p><br /><hr><br />");
+
+        }
+        console.log(j);
+        if(j==0)
+            $("#project_posts").append("No posts to display");
+
+    });
+    function showpop(obj)
+    {
+        var newWindow = window.open("", "newWindow", "resizable=yes");
+        newWindow.document.write('<a href="/projectpage/chat/'+obj.value+'">chat</a><br/><a href="/projectpage/sharefile/'+obj.value+'">Share File</a><br/>');
+    }
+</script>
+
+</body>
+</html>

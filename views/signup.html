@@ -1,0 +1,128 @@
+<html lang="en" xmlns:id="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>Registration</title>
+  <link href="stylesheets/foundation.css" type="text/css" rel="stylesheet" />
+  <link href="stylesheets/normalize.css" type="text/css" rel="stylesheet" />
+  <link href="stylesheets/app.css" type="text/css" rel="stylesheet" />
+ </head>
+ <body>
+  <div style="float:top">
+   <img class="inline" src="images/logo.jpg" alt="logo" height="100" width="100" />
+   <h1 id="h1" style="display:inline">Collaboration Tool</h1>
+   </div>
+  <div>
+   <form action="/signup" method="POST">
+     <div class="row">
+       <div class="large-4 columns">
+       <label>User Name:*
+           <input type="text" placeholder="Enter UserName" name="name" id="name" required/>
+       </label>
+       </div>
+     </div>
+     <div class="row">
+     <div class="large-4 columns">
+      <label>Designation:*
+        <select name="designation" id="designation" required>
+          <option value="Manager">Manager</option>
+          <option value="Project Manager">Project Manager</option>
+          <option value="Developer">Developer</option>
+          <option value="Tester">Tester</option>
+        </select>
+      </label>
+     </div>
+     </div>
+     <div class="row">
+       <div class="large-4 columns">
+         <label>
+          Password:*
+           <input type="password" placeholder="Enter Password" name="pwd" id="pwd" required/>
+         </label>
+       </div>
+      </div>
+     <div class="row">
+       <div class="large-4 columns">
+         <label>
+          Re-Enter Password:*
+           <input type="password" placeholder="Re-Enter Password" name="cpasswd" id="cpwd" required/>
+         </label>
+       </div>
+       <p style="display:inline;color:red" id="rpwd"></p>
+      </div>
+
+     <div class="row">
+       <div class="large-4 columns">
+         <label>
+          Email ID:*
+           <input type="email" placeholder="Enter Email ID" name="email" id="email" required />
+         </label>
+       </div>
+      </div>
+      <p></p>
+     <div class="row">
+       <div class="large-4 columns">
+         <label>
+          Address:
+           <textarea rows="5" cols="20" placeholder="Address" name="address" id="address"></textarea>
+         </label>
+       </div>
+      </div>
+      <div class="row">
+       <div class="large-4 columns">
+         <label>
+          Mobile No:*
+           <input type="text" placeholder="Mobile Number" name="phoneno" id="phoneno" required />
+         </label>
+       </div>
+       <p style="display:inline;color:red" id="num"></p>
+      </div>
+
+    <div class="row">
+      <div class="large-6 columns">
+        <label>Gender:*</label>
+        <input type="radio" name="gender" value="male" id="gender" checked />
+        <label for="gm">Male</label>
+        <input type="radio" name="gender" value="female" id="gender">
+        <label for="gf">Female</label>
+        <input type="radio" name="gender" value="transgender" id="gender">
+        <label for="gt">Other</label>
+      </div>
+    </div>
+    <div class="row" align='center' >
+       <div class="large-4 columns">
+          <input type="submit" name="submit" class="button small round" disabled="disabled" id="submit" />
+          <input type="reset" name="reset" class="button small round" />
+       </div>
+    </div>
+  </form>
+ </div>
+ <script src="javascripts/jquery.js">
+ </script>
+ <script>
+  function truecase(id)
+  {
+     document.getElementById(id).innerHTML="";
+          document.getElementById("submit").removeAttribute("disabled");
+  }
+  function falsecase(id,text){
+              document.getElementById(id).innerHTML=text;
+          document.getElementById("submit").setAttribute("disabled","disabled");
+
+  }
+      $("#phoneno").keyup(function(){
+        var text=document.getElementById("phoneno").value;
+        if(text.length==10 && !isNaN(text))
+         truecase("num");
+        else
+          falsecase("num","please enter a valid number");
+      });
+      $("#cpwd,#pwd").keyup(function(){
+        var ctext=document.getElementById("cpwd").value;
+        var text=document.getElementById("pwd").value;
+        if(text==ctext)
+          truecase("rpwd");
+        else
+          falsecase("rpwd","passwords doesnot match");
+      });
+ </script>
+</body>
+</html>

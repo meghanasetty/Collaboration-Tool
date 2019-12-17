@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{receiver}}</title>
+    <script src="/javascripts/jquery.js">
+    </script>
+    <script>
+        $(document).ready(function() {
+        var filenames="{{filenames}}".split(',');console.log(filenames);
+            for(var i=0;i<filenames.length;i++) {
+                var temp=filenames[i].split("/");
+                filenames[i]=temp[temp.length-1];
+                $("#files").append('<a href=\"/projectpage/storefile/' +filenames[i] + '\">' + filenames[i] + '</a><br />');
+            }
+            document.getElementById('file').addEventListener('change', readFile, false);
+
+            function readFile (evt) {
+                var files = evt.target.files;
+                var file = files[0];
+                var reader = new FileReader();
+                reader.onload = function() {
+                    console.log(this.result);
+                    console.log(file.name);
+                    document.getElementById('filename').value=file.name;
+                    document.getElementById('content').value = this.result;
+                };
+                reader.readAsText(file);
+            }
+
+        });
+    </script>
+</head>
+<body>
+    <form id="load" action="/projectpage/filesend" method="POST">
+        <input type="hidden" id="filename" name="filename" />
+        <input type="hidden" id="content" name="content" />
+        <input type="file" id="file" name="file" enctype="multipart/form-data" />
+        <input type="submit" id="submit" value="Submit" />
+    </form>
+    <div id="files">
+    </div>
+</body>
+</html
